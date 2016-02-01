@@ -39,18 +39,11 @@ import React, {
 } from 'react-native';
 
 let GiftedListView = require('react-native-gifted-listview');
-let _props;
 
-class RefreshableListView extends Component{
-    constructor(props){
+class RefreshableListView extends Component {
+
+    constructor(props) {
         super(props);
-        //this.state = {
-        //    renderRow: this.props.renderRow,
-        //    backgroundColor: this.props.backgroundColor ? this.props.backgroundColor : '#FFFFFF',
-        //    loadMoreText: this.props.loadMoreText ? this.props.loadMoreText : '+',
-        //    renderHeader: this.props.renderHeader ? this.props.renderHeader : null
-        //};
-        _props = this.props;
     }
 
     /**
@@ -59,8 +52,8 @@ class RefreshableListView extends Component{
      * @param callback
      * @param options
      */
-    onRefresh(page=1, callback, options){
-        _props.onRefresh(page, callback);
+    onRefresh(page = 1, callback, options) {
+        this.props.onRefresh(page, callback);
     }
 
     /**
@@ -68,14 +61,14 @@ class RefreshableListView extends Component{
      * @param row
      * @returns {*}
      */
-    renderRow(row){
-        return _props.renderRow(row);
+    renderRow(row) {
+        return this.props.renderRow(row);
     }
 
-    render(){
-        return(
-            <View style={[styles.container, {backgroundColor: _props.backgroundColor}, this.props.style]}>
-                <View style={styles.navBarSpace} />
+    render() {
+        return (
+            <View style={[styles.container, {backgroundColor: this.props.backgroundColor}, this.props.style]}>
+                <View style={styles.navBarSpace}/>
                 <GiftedListView rowView={row => this.renderRow(row)}
                                 onFetch={this.onRefresh.bind(this)}
                                 paginationAllLoadedView={this.renderPaginationAllLoadedView.bind(this)}
@@ -84,12 +77,12 @@ class RefreshableListView extends Component{
                                 refreshable={Platform.OS !== 'android'}
                                 customStyles={{
                                                 refreshableView: {
-                                                    backgroundColor: _props.backgroundColor,
+                                                    backgroundColor: this.props.backgroundColor,
                                                     justifyContent: 'flex-end',
                                                     paddingBottom: 12
                                                 },
                                                 paginationView: {
-                                                    backgroundColor: _props.backgroundColor,
+                                                    backgroundColor: this.props.backgroundColor,
                                                     height: 60
                                                 }
                                 }}/>
@@ -98,7 +91,7 @@ class RefreshableListView extends Component{
     }
 
     renderPaginationAllLoadedView() {
-        return(<View />);
+        return (<View />);
     }
 
     renderPaginationWaitingView(paginateCallback) {
@@ -106,15 +99,15 @@ class RefreshableListView extends Component{
             <TouchableOpacity style={styles.paginationView}
                               onPress={paginateCallback}>
                 <Text style={styles.loadMoreText}>
-                    {_props.loadMoreText}
+                    {this.props.loadMoreText}
                 </Text>
-           </TouchableOpacity>
+            </TouchableOpacity>
         );
     }
 
     renderHeaderView() {
-        if(_props.renderHeader){
-            return _props.renderHeader();
+        if (this.props.renderHeader) {
+            return this.props.renderHeader();
         }
         return (null);
     }
